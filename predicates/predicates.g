@@ -106,9 +106,18 @@ proc   nrsOfPosEvenElems(list:int[] -> nrPos:int, nrEven:int)
   rule nrsOfPosEvenElems(int[e::r]  -> nPos  , nEven  ) :
        nrsOfPosEvenElems(r -> nPos, nEven)
 
-//TODO description is not compatible to proc name
-proc   nrsOfNegEvenElems(list:int[] -> nrPos:int, nrEven:int)
+// Computes the number of negative elements (nrNeg)
+// and      the number of even     elements (nrEven) in list.
+proc   nrsOfNegEvenElems(list:int[] -> nrNeg:int, nrEven:int)
   rule nrsOfNegEvenElems(int[]      -> 0, 0)
+  rule nrsOfNegEvenElems(int[e::r]  -> nNeg+1, nEven+1) :
+       nrsOfNegEvenElems(r -> nNeg, nEven) Less(e, 0) isEven(e)
+  rule nrsOfNegEvenElems(int[e::r]  -> nNeg+1, nEven  ) :
+       nrsOfNegEvenElems(r -> nNeg, nEven) Less(e, 0)
+  rule nrsOfNegEvenElems(int[e::r]  -> nNeg  , nEven+1) :
+       nrsOfNegEvenElems(r -> nNeg, nEven) isEven(e)
+  rule nrsOfNegEvenElems(int[e::r]  -> nNeg  , nEven  ) :
+       nrsOfNegEvenElems(r -> nNeg, nEven)
 
 // The listPos contains all positive elements of list.
 // Remember: 0 is not positive.
@@ -220,6 +229,7 @@ root
   listsOfPosNegElems(list1 -> listPos2, listNeg2) // int[1, 2, 3, 3],
                                                   // int[-3, -3, -2, -1]
   nrsOfPosEvenElems (list1 -> nPos3, nEven2)      // 4, 3
+  nrsOfNegEvenElems (list2 -> nNeg3, nEven3)      // 3, 1
   listOfEvenElems   (list1 -> listEven)           // int[-2, 0, 2]
   nrOfEqualNeighbors(list1 -> pairs)              // 2
 
@@ -241,6 +251,8 @@ root
   print listNeg2
   print nPos3
   print nEven2
+  print nNeg3
+  print nEven3
   print listEven
   print pairs
   print "predicates executed"
