@@ -1,3 +1,5 @@
+// ancestor03: Compiler, der Worte der formalen Sprache A1 in eine Zwischendarstellung uebersetzt, und zwar in Werte des folgenden Gentle-Typs:
+
 type AS_ancestor
   mo()
   fa()
