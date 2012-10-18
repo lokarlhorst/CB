@@ -1,18 +1,25 @@
-phrase ancestor
-  rule ancestor : ancestor1
-  rule ancestor : ancestor2
-  rule ancestor : ancestor3
+// ancestor01: Parser fuer die (kontextfreie, Typ-2-) Grammatik A1
 
-phrase ancestor1
-  rule ancestor1 : "mother"
-  rule ancestor1 : "father"
+// A1 = { mother, father, grandmother, grandfather, greatgrandmother,
+// greatgrandfather, greatgreatgrandmother, ...,
+// greatgreatgreatgreatgreatgrandfather, ...}
 
-phrase ancestor2
-  rule ancestor2 : "grand" ancestor1
+phrase ancestor01
+  rule ancestor01 : ancestor01_1
+  rule ancestor01 : ancestor01_2
+  rule ancestor01 : ancestor01_3
 
-phrase ancestor3
-  rule ancestor3 : "great" ancestor2
-  rule ancestor3 : "great" ancestor3
+phrase ancestor01_1
+  rule ancestor01_1 : "mother"
+  rule ancestor01_1 : "father"
+
+phrase ancestor01_2
+  rule ancestor01_2 : "grand" ancestor01_1
+
+phrase ancestor01_3
+  rule ancestor01_3 : "great" ancestor01_2
+  rule ancestor01_3 : "great" ancestor01_3
 
 root
-  ancestor
+  ancestor01
+  print("Successfully parsed!")
