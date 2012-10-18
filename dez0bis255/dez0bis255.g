@@ -1,3 +1,4 @@
+// First phrase can be used as predicate, otherwise it must be a proc
 phrase Zahlen0Bis255
   rule Zahlen0Bis255 : Zahlen0Bis99
   rule Zahlen0Bis255 : "1" Ziff0Bis9 Ziff0Bis9
@@ -33,12 +34,6 @@ phrase Ziff1Bis9
 phrase Zahlen0Bis99
   rule Zahlen0Bis99 : Ziff0Bis9
   rule Zahlen0Bis99 : Ziff1Bis9 Ziff0Bis9
-
-//phrase Zahlen0Bis255
-//  rule Zahlen0Bis255 : Zahlen0Bis99
-//  rule Zahlen0Bis255 : "1" Ziff0Bis9 Ziff0Bis9
-//  rule Zahlen0Bis255 : "2" Ziff0Bis4 Ziff0Bis9
-//  rule Zahlen0Bis255 : "2" Ziff0Bis5 Ziff0Bis5
 
 root
   Zahlen0Bis255
