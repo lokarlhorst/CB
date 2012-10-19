@@ -58,15 +58,15 @@ proc   out06(AS_ancestor06)
                                 out06_3(g1)     out06_4(g3)
 
 proc   out06_1(gender, int)
-  rule out06_1(m(), n) : Equal(n, 1) "Der "
-  rule out06_1(m(), n) :             "Ein "
-  rule out06_1(w(), n) : Equal(n, 1) "Die "
-  rule out06_1(w(), n) :             "Eine "
+  rule out06_1(m(), 1) : "Der "
+  rule out06_1(m(), _) : "Ein "
+  rule out06_1(w(), 1) : "Die "
+  rule out06_1(w(), _) : "Eine "
 
 proc   out06_2(int)
   rule out06_2(n) : Greater(n, 2) "ur"    out06_2(n-1)
   rule out06_2(n) : Equal(n, 2)   "gross" out06_2(n-1)
-  rule out06_2(n)
+  rule out06_2(1)
 
 proc   out06_3(gender)
   rule out06_3(m()) : "vater "

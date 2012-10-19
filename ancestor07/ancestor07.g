@@ -58,8 +58,8 @@ proc   out07(AS_ancestor07)
   rule out07(a07(g1, g2, g3)) : out07_1(g2) out07_2(g2) out07_3(g1) out07_4(g3)
 
 proc   out07_1(int)
-  rule out07_1(n) : Equal(n, 1) "The "
-  rule out07_1(n) :             "A "
+  rule out07_1(1) : "The "
+  rule out07_1(_) : "A "
 
 proc   out07_2(int)
   rule out07_2(n) : Greater(n, 2) "great" out07_2(n-1)
