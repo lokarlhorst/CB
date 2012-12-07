@@ -10,13 +10,11 @@ phrase NZ_Getr_0104
 
 phrase NZ_Getr_0104_B
   rule NZ_Getr_0104_B : GK_BuFo "#"
-  rule NZ_Getr_0104_B : GK_BuFo "#" ZiffFo "#"
-  rule NZ_Getr_0104_B : GK_BuFo "#" ZiffFo "#" NZ_Getr_0104_B
+  rule NZ_Getr_0104_B : GK_BuFo "#" NZ_Getr_0104_Z
 
 phrase NZ_Getr_0104_Z
   rule NZ_Getr_0104_Z : ZiffFo "#"
-  rule NZ_Getr_0104_Z : ZiffFo "#" GK_BuFo "#"
-  rule NZ_Getr_0104_Z : ZiffFo "#" GK_BuFo "#" NZ_Getr_0104_Z
+  rule NZ_Getr_0104_Z : ZiffFo "#" NZ_Getr_0104_B
 
 // FS04 ////////////////////////////////////////////////////////////////////////
 
