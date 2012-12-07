@@ -1,0 +1,19 @@
+if 3 < 5 then
+   writeln(" OK-01");
+end if;
+
+if 3 < 2 then
+   writeln("NOK-01");
+end if;
+
+if 5 > 3 then
+   writeln(" OK-02");
+else
+   writeln("NOK-02");
+end if;
+
+if 2 > 3 then
+   writeln("NOK-03");
+else
+   writeln(" OK-03");
+end if;

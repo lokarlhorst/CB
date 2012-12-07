@@ -1,0 +1,44 @@
+// alg source program t02, every operator is used at least once
+
+writeln("");
+write("false : "); writeln(true and false);
+write("5     : "); writeln(3+2);
+write("1     : "); writeln(3-2);
+write("6     : "); writeln(3*2);
+write("1     : "); writeln(3/2);
+write("false : "); writeln(not true);
+write("true  : "); writeln(not false);
+write("-123  : "); writeln(-123);
+write("123   : "); writeln(-(-123));
+writeln("");
+write("false : "); writeln(3 <  2);
+write("false : "); writeln(3 <= 2);
+write("false : "); writeln(3 =  2);
+write("true  : "); writeln(3 != 2);
+write("true  : "); writeln(3 >= 2);
+write("true  : "); writeln(3 >  2);
+writeln("");
+write("false : "); writeln(true <  false);
+write("false : "); writeln(true <= false);
+write("false : "); writeln(true =  false);
+write("true  : "); writeln(true != false);
+write("true  : "); writeln(true >= false);
+write("true  : "); writeln(true >  false);
+writeln("");
+write("false : "); writeln("BBB" <  "AAA");
+write("false : "); writeln("BBB" <= "AAA");
+write("false : "); writeln("BBB" =  "AAA");
+write("true  : "); writeln("BBB" != "AAA");
+write("true  : "); writeln("BBB" >= "AAA");
+write("true  : "); writeln("BBB" >  "AAA");
+writeln("");
+
+write("10true: "); writeln("10" & "true");
+write("11true: "); writeln( 11  & "true");
+write("12true: "); writeln("12" &  true );
+write("13true: "); writeln( 13  &  true );
+writeln("");
+write("true  : "); writeln(true and not false or true);
+write("25    : "); writeln(10 + -20 * -30 / 40);
+write("true  : "); writeln(not(not(not false)));
+writeln("");

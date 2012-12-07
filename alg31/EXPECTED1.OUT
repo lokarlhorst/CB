@@ -1,0 +1,155 @@
+Testfile1
+-------------------------------
+Here we go!
+---------------+------------------+
+     expected  | found            |
+---------------+------------------+
+99-001      6  | 6
+99-002      2  | 2
+99-003      8  | 8
+99-004      2  | 2
+---------------+-------------------
+99-005      6  | 6
+99-006      2  | 2
+99-007      8  | 8
+99-008      2  | 2
+---------------+-------------------
+99-009      10 | 10
+99-010      14 | 14
+99-011      4  | 4
+99-012      2  | 2
+---------------+-------------------
+99-013      14 | 14
+99-014      20 | 20
+99-015      1  | 1
+99-016      6  | 6
+---------------+-------------------
+99-017      -5 | -5
+99-018      -1 | -1
+99-019      6  | 6
+99-020      1  | 1
+---------------+-------------------
+99-021      -3 | -3
+99-022      3  | 3
+99-023      -3 | -3
+99-024      3  | 3
+---------------+------------------+
+     expected  | found            |
+---------------+------------------+
+99-025   false | false
+99-026   true  | true
+99-027   true  | true
+99-028   true  | true
+---------------+-------------------
+99-029   false | false
+99-030   false | false
+99-031   false | false
+99-032   true  | true
+---------------+-------------------
+99-033   true  | true
+99-034   false | false
+99-035   false | false
+99-036   true  | true
+---------------+-------------------
+99-037   false | false
+99-038   true  | true
+99-039   true  | true
+99-040   true  | true
+---------------+-------------------
+99-041   false | false
+99-042   false | false
+99-043   false | false
+99-044   true  | true
+---------------+-------------------
+99-045   true  | true
+99-046   false | false
+99-047   false | false
+99-048   true  | true
+---------------+------------------+
+     expected  | found            |
+---------------+------------------+
+99-049    true | true
+99-050    true | true
+99-051    true | true
+99-052    true | true
+99-053    true | true
+99-054    true | true
+99-055    true | true
+99-056    true | true
+---------------+-------------------
+99-057    true | true
+99-058    true | true
+99-059    true | true
+99-060    true | true
+99-061    true | true
+99-062    true | true
+99-063    true | true
+99-064    true | true
+---------------+-------------------
+99-065    true | true
+99-066    true | true
+99-067    true | true
+99-068    true | true
+99-069    true | true
+99-070    true | true
+99-071    true | true
+99-072    true | true
+---------------+------------------+
+     expected  | found            |
+---------------+------------------+
+99-073   false | false
+99-074   false | false
+99-075   false | false
+99-076   false | false
+99-077   false | false
+99-078   false | false
+99-079   false | false
+99-080   false | false
+---------------+-------------------
+99-081   false | false
+99-082   false | false
+99-083   false | false
+99-084   false | false
+99-085   false | false
+99-086   false | false
+99-087   false | false
+99-088   false | false
+---------------+-------------------
+99-089   false | false
+99-090   false | false
+99-091   false | false
+99-092   false | false
+99-093   false | false
+99-094   false | false
+99-095   false | false
+99-096   false | false
+---------------+------------------+
+     expected  | found            |
+---------------+------------------+
+99-097     ABC | ABC
+99-098     ABC | ABC
+99-099     AB3 | AB3
+99-100     A2C | A2C
+99-101     1BC | 1BC
+99-102 ABfalse | ABfalse
+99-103 AfalseC | AfalseC
+99-104 falseBC | falseBC
+99-105 12false | 12false
+99-106 1false3 | 1false3
+99-107 false23 | false23
+---------------+------------------+
+     expected  | found            |
+---------------+------------------+
+99-108    AB5  | AB5
+99-109    5AB  | 5AB
+99-110   true  | true
+99-111   false | false
+99-112   falseA| falseA
+99-113   Atrue | Atrue
+99-114   -3A   | -3A
+99-115   A-3   | A-3
+99-116   true  | true
+99-117   false | false
+---------------+-------------------
+That's all!
+-------------------------------

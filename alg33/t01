@@ -1,0 +1,25 @@
+int i := 5;
+while i > 0 do
+   writeln("round " & i);
+   i := i - 1;
+end while;
+//
+writeln("-------");
+//
+do
+   i := i + 1;
+   writeln("round " & i);
+until (i >= 5) end until ;
+//
+writeln("-------");
+//
+int j := 3;
+int k;
+while j > 0 do
+   k := j;
+   while k > 0 do
+      writeln("round j: " & j & ", k: " & k);
+      k := k - 1;
+   end while;
+   j := j - 1;
+end while;

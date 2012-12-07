@@ -1,0 +1,541 @@
+Testfile2
+SRC int    x; int    x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC bool   x; bool   x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC string x; string x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC int    x; bool   x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC bool   x; string x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC string x; int    x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC int    x; write(17); int    x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC bool   x; write(17); bool   x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC string x; write(17); string x;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Double declaration
+SRC write(x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC writeln(x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC string x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC string x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC read(x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(x+x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(x-y-x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(y*x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(x/x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(x+x-x*x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(x/x*y+x-x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write( x + -y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(-y -  x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x; write(x or  x or  y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x; write(y and x and x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x; write(x or  not y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x; write(not y and x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(x =  y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x; write(y =  x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC string x; write(x =  y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x; write(y != x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC bool   x; write(x != y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC string x; write(y != x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Undeclared variable
+SRC int    x := true ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC int    x := "123";
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC bool   x := "123";
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC bool   x := 2    ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC string x := 2    ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC string x := true ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC bool   y; int    x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC string y; int    x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC string y; bool   x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC int    y; bool   x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC int    y; string x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC bool   y; string x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Typ error in variable declaration
+SRC int    x; x:= true ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC int    x; x:= "123";
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC bool   x; x:= "123";
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC bool   x; x:= 2    ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC string x; x:= 2    ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC string x; x:= true ;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC bool   y; int    x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC string y; int    x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC string y; bool   x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC int    y; bool   x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC int    y; string x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC bool   y; string x; x := y;
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Type error in assignment
+SRC writeln(   3 + true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(   3 + "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true + "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true +    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"+    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"+ true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true + true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"+ "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(   3 - true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(   3 - "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true - "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true -    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"-    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"- true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true - true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"- "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(   3 * true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(   3 * "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true * "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true *    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"*    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"* true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true * true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"* "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(   3 / true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(   3 / "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true / "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true /    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"/    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"/ true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(true / true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln("123"/ "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC writeln(-"123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC writeln(-true);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC int    x; bool   y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC int    x; string y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; string y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; int    y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; int    y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; bool   y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; bool   y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; string y; writeln(x+y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC int    x; bool   y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC int    x; string y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; string y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; int    y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; int    y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; bool   y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; bool   y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; string y; writeln(x-y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC int    x; bool   y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC int    x; string y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; string y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; int    y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; int    y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; bool   y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; bool   y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; string y; writeln(x*y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC int    x; bool   y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC int    x; string y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; string y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; int    y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; int    y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; bool   y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC bool   x; bool   y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; string y; writeln(x/y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary arithmetic operator is not int
+SRC string x; writeln(-x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC bool   x; writeln(-x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC writeln(   3  or true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(   3  or "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(true  or "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(true  or    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln("123" or    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln("123" or true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(   3  and true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(   3  and "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(true  and "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(true  and    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln("123" and    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln("123" and true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC writeln(not "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC writeln(not    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC int    x; bool   y; writeln(x or y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC int    x; string y; writeln(x or y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC bool   x; string y; writeln(x or y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC bool   x; int    y; writeln(x or y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC string x; int    y; writeln(x or y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC string x; bool   y; writeln(x or y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC int    x; bool   y; writeln(x and y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC int    x; string y; writeln(x and y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC bool   x; string y; writeln(x and y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC bool   x; int    y; writeln(x and y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC string x; int    y; writeln(x and y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC string x; bool   y; writeln(x and y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of binary bool operator is not bool
+SRC string x; writeln(not x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC int    x; writeln(not x);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operand of unary operator has wrong type
+SRC writeln(   3 = true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln(   3 = "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln(true = "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln(true =    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln("123"=    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln("123"= true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln(   3 != true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln(   3 != "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln(true != "123");
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln(true !=    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln("123"!=    3 );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC writeln("123"!= true );
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC int    x; bool   y; writeln(x=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC int    x; string y; writeln(x=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC bool   x; string y; writeln(x=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC bool   x; int    y; writeln(x=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC string x; int    y; writeln(x=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC string x; bool   y; writeln(x=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC int    x; bool   y; writeln(x!=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC int    x; string y; writeln(x!=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC bool   x; string y; writeln(x!=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC bool   x; int    y; writeln(x!=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC string x; int    y; writeln(x!=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
+SRC string x; bool   y; writeln(x!=y);
+*** java -classpath . YySupportPackage.Program ALG.TMP 
+Error in line 1: Operands of a comparison are of different types
