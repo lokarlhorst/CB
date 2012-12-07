@@ -1,0 +1,55 @@
+Testfile2
+SRC int    x; int    x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC bool   x; bool   x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC string x; string x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC int    x; bool   x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC bool   x; string x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC string x; int    x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC int    x; write(17); int    x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC bool   x; write(17); bool   x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC string x; write(17); string x;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Double declaration
+SRC write(x);
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC writeln(x);
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC int    x := y;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC bool   x := y;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC string x := y;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC int    x; x := y;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC bool   x; x := y;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC string x; x := y;
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable
+SRC read(x);
+*** java -classpath . YySupportPackage.Program TMP.ALG 
+Error in line 1: Undeclared variable

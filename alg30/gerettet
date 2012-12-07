@@ -1,0 +1,66 @@
+package YyGramGenPackage;
+// GramGen 1-YyLexer
+import YyGrammarPackage.*;
+import YySupportPackage.*;
+import YyProcsPackage.*;
+public
+%%
+%{
+public LexerState YyState;
+%}
+%integer
+%%
+")" {
+   //YyGrammarPackage.GrammarLib.yylval =
+YyGrammarPackage.SemanticActions.Yytext(yytext(), YyState);
+   return YyTokens.T__rparen_;
+}
+"(" {
+   //YyGrammarPackage.GrammarLib.yylval =
+YyGrammarPackage.SemanticActions.Yytext(yytext(), YyState);
+   return YyTokens.T__lparen_;
+}
+"writeln" {
+   //YyGrammarPackage.GrammarLib.yylval =
+YyGrammarPackage.SemanticActions.Yytext(yytext(), YyState);
+   return YyTokens.T_writeln;
+}
+";" {
+   //YyGrammarPackage.GrammarLib.yylval =
+YyGrammarPackage.SemanticActions.Yytext(yytext(), YyState);
+   return YyTokens.T__semicolon_;
+}
+[A-Za-z](_?[A-Za-z0-9])* {
+/*YyGrammarPackage.GrammarLib.yylval =*/ YyGrammarPackage.SemanticActions.Yytext(yytext(), YyState);
+   return YyTokens.CS_Ident;
+}
+[0-9]+ {
+JavaNode n1 = YyGrammarPackage.SemanticActions.Yytext(yytext(), YyState);
+JavaNode n2 = JavaLib.ValueConverter(n1);
+YyGrammarPackage.SemanticActions.AssignYylval(n2, YyState);
+   return YyTokens.CS_Natural;
+}
+\"([^\"]|\\\")*\" {
+JavaNode n1 = YyGrammarPackage.SemanticActions.Yytext(yytext(), YyState);
+YyProcs.RemoveQuotes(n1);
+JavaNode n2 = JavaLib.yyoutvalue1;
+YyGrammarPackage.SemanticActions.AssignYylval(n2, YyState);
+   return YyTokens.CS_String;
+}
+(\ |\t|\n|\r) {
+YyGrammarPackage.SemanticActions.Yywhitespace(yytext(), YyState);
+if (YyGrammarPackage.GrammarLib.SignalWhitespace) return YyGrammarPackage.GrammarLib.WhitespaceToken;
+}
+#[^#]+# {
+YyGrammarPackage.SemanticActions.Yywhitespace(yytext(), YyState);
+if (YyGrammarPackage.GrammarLib.SignalWhitespace) return YyGrammarPackage.GrammarLib.WhitespaceToken;
+}
+//.* {
+YyGrammarPackage.SemanticActions.Yywhitespace(yytext(), YyState);
+if (YyGrammarPackage.GrammarLib.SignalWhitespace) return YyGrammarPackage.GrammarLib.WhitespaceToken;
+}
+. {
+   // Unmatched
+YyGrammarPackage.SemanticActions.Yyunmatched(yytext(), YyState);
+return YyGrammarPackage.GrammarLib.ErrorToken;
+}
