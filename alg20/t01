@@ -1,0 +1,11 @@
+// File t01, source program (with errors) for parser in folder alg20
+
+prog
+   dec bert,
+
+   dec bert,           // double declaration
+   stm karl, dec karl, // karl is undeclared when used
+   stm bert,
+   dec bert,           // double declaration (or: triple declaration)
+   stm carl            // carl is undeclared
+end

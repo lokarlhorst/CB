@@ -1,0 +1,9 @@
+// File t04, source program (with errors) for parser in folder alg20
+
+prog
+   stm bert,
+   dec bert,
+   stm bert,
+   dec bert,
+   stm carl
+end
