@@ -1,3 +1,5 @@
-int anna;
-write("anna: ");
-writeln(anna);
+write("write"); writeln("writeln");
+write(123);
+writeln(456);
+write(false);
+writeln(true);
