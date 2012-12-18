@@ -1,0 +1,17 @@
+bool anna;
+int bert;
+string chris;
+
+write("anna: ");
+read(anna);
+write("bert: ");
+read(bert);
+write("chris: ");
+read(chris);
+
+write("anna = ");
+writeln(anna);
+write("bert = ");
+writeln(bert);
+write("chris = ");
+writeln(chris);

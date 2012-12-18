@@ -51,7 +51,7 @@ proc    initialise()
 // Abstract syntax types ///////////////////////////////////////////////////////
 
 type AS_Cmd
-  read(Input:string)
+  read(SI:string)
   write(AS_Exp)
   writeln(AS_Exp)
   vardec(SI:string, AS_Type, AS_Exp)
@@ -86,22 +86,22 @@ phrase  CS_Cmds(-> AS_Cmd[])
 //   will implicitly be initialized with 0 or "" respectively
 // - Variable declarations with explicit initialization
 phrase  CS_Cmd(-> AS_Cmd)
-  rule  CS_Cmd(-> read(TXT))    : "read"    "(" CS_String(-> TXT) ")"
+  rule  CS_Cmd(-> read(SI))     : "read"    "(" CS_Ident(-> SI) ")"
   rule  CS_Cmd(-> write(EXP))   : "write"   "(" CS_Exp(-> EXP) ")"
   rule  CS_Cmd(-> writeln(EXP)) : "writeln" "(" CS_Exp(-> EXP) ")"
-  rule  CS_Cmd(-> vardec(ID,   bool(), lit(boolVal(0))))
-        "bool"   CS_Ident(-> ID)
-  rule  CS_Cmd(-> vardec(ID,    int(), lit(intVal(0))))
-        "int"    CS_Ident(-> ID)
-  rule  CS_Cmd(-> vardec(ID, string(), lit(stringVal(""))))
-        "string" CS_Ident(-> ID)
-  rule  CS_Cmd(-> vardec(ID,   bool(), EXP))
-        "bool"   CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
-  rule  CS_Cmd(-> vardec(ID,    int(), EXP))
-        "int"    CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
-  rule  CS_Cmd(-> vardec(ID, string(), EXP))
-        "string" CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
-  rule  CS_Cmd(-> assign(ID, EXP)) : CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> vardec(SI,   bool(), lit(boolVal(0))))
+        "bool"   CS_Ident(-> SI)
+  rule  CS_Cmd(-> vardec(SI,    int(), lit(intVal(0))))
+        "int"    CS_Ident(-> SI)
+  rule  CS_Cmd(-> vardec(SI, string(), lit(stringVal(""))))
+        "string" CS_Ident(-> SI)
+  rule  CS_Cmd(-> vardec(SI,   bool(), EXP))
+        "bool"   CS_Ident(-> SI) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> vardec(SI,    int(), EXP))
+        "int"    CS_Ident(-> SI) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> vardec(SI, string(), EXP))
+        "string" CS_Ident(-> SI) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> assign(SI, EXP)) : CS_Ident(-> SI) ":=" CS_Exp(-> EXP)
 
 // Parse expressions like strings, booleans, ints and identifiers
 phrase  CS_Exp(-> AS_Exp)
@@ -109,7 +109,7 @@ phrase  CS_Exp(-> AS_Exp)
   rule  CS_Exp(-> lit(intVal(INT)))    : CS_Natural(-> INT)
   rule  CS_Exp(-> lit(boolVal(0)))     : "false"
   rule  CS_Exp(-> lit(boolVal(1)))     : "true"
-  rule  CS_Exp(-> varapp(ID))          : CS_Ident(-> ID)
+  rule  CS_Exp(-> varapp(SI))          : CS_Ident(-> SI)
 
 // Gentle has predefined token predicates IDENT, INTEGER and STRING,
 // but here we define our own to see how it can be done:
@@ -296,10 +296,23 @@ proc    outCmds(CMDS:AS_Cmd[])
 
 // Output the translation of a single command
 proc    outCmd(AS_Cmd)
-  rule  outCmd(read(_)):
+  rule  outCmd(read(SI))
         "; read" pNL
-        // TODO
-  rule  outCmd(write(EXP)):
+        Get-SymTab(SI -> m(TYPE, TI))
+        pInd
+        {
+          TYPE -> bool()      "invokestatic RTS/readBool()I"    pNL
+          pInd { Less(TI, 4)  "istore_" $TI | "istore " $TI }
+        |
+          TYPE -> int()       "invokestatic RTS/readInt()I"     pNL
+          pInd { Less(TI, 4)  "istore_" $TI | "istore " $TI }
+        |
+          TYPE -> string()
+          "invokestatic RTS/readString()Ljava/lang/String;"     pNL
+          pInd { Less(TI, 4)  "astore_" $TI | "astore " $TI }
+        }
+        pNL
+  rule  outCmd(write(EXP))
         "; write" pNL
         outExp(EXP)
         pInd
@@ -309,7 +322,7 @@ proc    outCmd(AS_Cmd)
           isBool(EXP)   "invokestatic RTS/pBool(I)V"
         }
         pNL
-  rule  outCmd(writeln(EXP)):
+  rule  outCmd(writeln(EXP))
         "; writeln" pNL
         outExp(EXP)
         pInd
@@ -319,20 +332,15 @@ proc    outCmd(AS_Cmd)
           isString(EXP) "invokestatic RTS/plnString(Ljava/lang/String;)V"
         }
         pNL
-  rule  outCmd(vardec(_, _, EXP)):
+  rule  outCmd(vardec(_, _, EXP))
         "; vardec" pNL
         Get-NextTargetID(-> NTI)
         Get-Iterator(-> TI)
         LessOrEqual(TI, NTI)
         {
-          isBool(EXP)
+          { isBool(EXP) | isInt(EXP) }
           outExp(EXP)
           pInd { Less(TI, 4) "istore_" $TI | "istore " $TI }
-        |
-          isInt(EXP)
-          outExp(EXP)
-          pInd
-          { Less(TI, 4) "istore_" $TI | "istore " $TI }
         |
           isString(EXP)
           pInd "new java/lang/String"                                       pNL
@@ -343,19 +351,22 @@ proc    outCmd(AS_Cmd)
         }
         pNL
         Set-Iterator(TI+1)
-  rule  outCmd(assign(SI, EXP)):
+  rule  outCmd(assign(SI, EXP))
         "; assign" pNL
         Get-SymTab(SI -> m(TYPE, TI))
         {
-          isBool(EXP)
+          // isBool(EXP)
+          TYPE -> bool()
           outExp(EXP)
           pInd { Less(TI, 4) "istore_" $TI | "istore " $TI }
         |
-          isInt(EXP)
+          // isInt(EXP)
+          TYPE -> int()
           outExp(EXP)
           pInd { Less(TI, 4) "istore_" $TI | "istore " $TI }
         |
-          isString(EXP)
+          // isString(EXP)
+          TYPE -> string()
           pInd "new java/lang/String"                                       pNL
           pInd "dup"                                                        pNL
           outExp(EXP)
