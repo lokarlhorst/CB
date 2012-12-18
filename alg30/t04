@@ -1,55 +1,18 @@
-// alg30 source file TST1.ALG with all alg30 commands (except read):
+bool anna := true;
+int bert := 27;
+string chris := "doof";
 
-writeln("---------------+------------------+");
-writeln("     expected  | found            |");
-writeln("---------------+------------------+");
-write  ("99-001   ABC   | "); writeln("ABC" );
-write  ("99-002   100   | "); writeln( 100  );
-write  ("99-003   false | "); writeln( false);
-write  ("99-004   true  | "); writeln( true );
-writeln("---------------+------------------+");
-write  ("99-005   ABC   | "); write ("ABC" ); write("\n");
-write  ("99-006   100   | "); write ( 100  ); write("\n");
-write  ("99-007   false | "); write ( false); write("\n");
-write  ("99-008   true  | "); write ( true ); write("\n");
+write("anna: ");
+writeln(anna);
+write("bert: ");
+writeln(bert);
+write("chris: ");
+writeln(chris);
 
-string s1;
-string s2 := "ABC";
-string s3 := s2;
+bert := 50;
 
-int    i1;
-int    i2 := 100;
-int    i3 := i2;
+write("bert: ");
+writeln(bert);
 
-bool   b1;
-bool   b2 := true;
-bool   b3 := b2;
-
-writeln("---------------+------------------+");
-writeln("     expected  | found            |");
-writeln("---------------+------------------+");
-write  ("99-009   <-    | "); write  (s1 ); writeln("<-");
-write  ("99-010   0     | "); writeln(i1 );
-write  ("99-011   false | "); writeln(b1 );
-writeln("---------------+------------------+");
-write  ("99-012   ABC   | "); writeln(s2 );
-write  ("99-013   100   | "); writeln(i2 );
-write  ("99-014   true  | "); writeln(b2 );
-writeln("---------------+------------------+");
-write  ("99-015   ABC   | "); writeln(s3 );
-write  ("99-016   100   | "); writeln(i3 );
-write  ("99-017   true  | "); writeln(b3 );
-writeln("---------------+------------------+");
-write  ("99-018   ABC   | "); write  (s3 );  write("\n");
-write  ("99-019   100   | "); write  (i3 );  write("\n");
-write  ("99-020   true  | "); write  (b3 );  write("\n");
-
-s1 := "DEF";
-i1 := 200;
-b1 := false;
-
-writeln("---------------+------------------+");
-write  ("99-021   DEF   | "); writeln(s1 );
-write  ("99-022   200   | "); writeln(i1 );
-write  ("99-023   false | "); writeln(b1 );
-writeln("---------------+------------------+");
+// int karl := "string";
+// write(paul);

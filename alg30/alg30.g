@@ -35,6 +35,7 @@ proc    root2()
 // Each source identifier has to be translated to a target identifier:
 // Target identifiers are natural numbers starting with 1.
 data NextTargetID(-> int)
+data Iterator(-> int)
 
 // The symbol table SymTab maps source identifiers of type string
 // to their meaning of type Meaning
@@ -45,6 +46,7 @@ data SymTab(string -> Meaning)
 proc    initialise()
   rule  initialise():
         Set-NextTargetID(1)
+        Set-Iterator(1)
 
 // Abstract syntax types ///////////////////////////////////////////////////////
 
@@ -52,8 +54,8 @@ type AS_Cmd
   read(Input:string)
   write(AS_Exp)
   writeln(AS_Exp)
-  vardec(Ident:string, AS_Type, AS_Exp)
-  assign(Ident:string, AS_Exp)
+  vardec(SI:string, AS_Type, AS_Exp)
+  assign(SI:string, AS_Exp)
 
 type AS_Exp
   lit(AS_Val)     // Literal
@@ -79,28 +81,27 @@ phrase  CS_Cmds(-> AS_Cmd[])
         CS_Cmd (-> ACMD) ";"
         CS_Cmds(-> ACMDS)
 
-// Parse commands like read, write and writeln
+// - Parse commands like read, write and writeln
+// - Variable declarations without explicit initialization. Such Variables
+//   will implicitly be initialized with 0 or "" respectively
+// - Variable declarations with explicit initialization
 phrase  CS_Cmd(-> AS_Cmd)
-  rule  CS_Cmd(-> read(TEXT))   : "read"    "(" CS_String(-> TEXT) ")"
+  rule  CS_Cmd(-> read(TXT))    : "read"    "(" CS_String(-> TXT) ")"
   rule  CS_Cmd(-> write(EXP))   : "write"   "(" CS_Exp(-> EXP) ")"
   rule  CS_Cmd(-> writeln(EXP)) : "writeln" "(" CS_Exp(-> EXP) ")"
-  rule  CS_Cmd(-> vardec(ID, T, EXP) : CS_Decl(-> ID, T, EXP)
-  rule  CS_Cmd(-> vardec(ID, T, EXP) : CS_DeclInit(-> ID, T, EXP)
-  rule  CS_Cmd(-> assign(ID, EXP)    : CS_Assign(-> ID, EXP)
-
-// Variable declarations without explicit initialization. Such Variables
-// will implicitly be initialized with 0 or "" respectively
-phrase  CS_Decl(-> Ident:string, AS_Type, AS_Exp)
-  rule  CS_Decl(-> ID,   bool(), lit(boolVal(0))   ) : "bool"   CS_Ident(-> ID)
-  rule  CS_Decl(-> ID,    int(), lit(intVal(0))    ) : "int"    CS_Ident(-> ID)
-  rule  CS_Decl(-> ID, string(), lit(stringVal(""))) : "string" CS_Ident(-> ID)
-
-// Variable declarations with explicit initialization
-phrase  CS_DeclInit(-> Ident:string, AS_Type, AS_Exp)
-  rule  CS_DeclInit(-> ID, T, EXP) : CS_Decl(-> ID, T, _) ":=" CS_Exp(-> EXP)
-
-phrase  CS_Assign(-> Ident:string, AS_Exp)
-  rule  CS_Assign(-> ID, EXP) : CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> vardec(ID,   bool(), lit(boolVal(0))))
+        "bool"   CS_Ident(-> ID)
+  rule  CS_Cmd(-> vardec(ID,    int(), lit(intVal(0))))
+        "int"    CS_Ident(-> ID)
+  rule  CS_Cmd(-> vardec(ID, string(), lit(stringVal(""))))
+        "string" CS_Ident(-> ID)
+  rule  CS_Cmd(-> vardec(ID,   bool(), EXP))
+        "bool"   CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> vardec(ID,    int(), EXP))
+        "int"    CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> vardec(ID, string(), EXP))
+        "string" CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
+  rule  CS_Cmd(-> assign(ID, EXP)) : CS_Ident(-> ID) ":=" CS_Exp(-> EXP)
 
 // Parse expressions like strings, booleans, ints and identifiers
 phrase  CS_Exp(-> AS_Exp)
@@ -155,8 +156,7 @@ whitespace
 
 // Check for formal errors which the lexer and parser could not detect
 // ("semantic errors" or "errors of type 1 and type 0")
-// After finding and reporting the first such error this compiler
-// will stop.
+// After finding and reporting the first such error this compiler will stop.
 proc    check10(SynTree: AS_Cmd[])
   rule  check10(CMDS):
         checkVarDecls(CMDS)       // Is no variable declared more than once?
@@ -164,16 +164,33 @@ proc    check10(SynTree: AS_Cmd[])
 
 // From a syntax tree construct a symbol table and
 // check for double declarations:
-proc    checkVarDecls(SynTree:AS_Cmd[]) //TODO
+proc    checkVarDecls(SynTree:AS_Cmd[])
   // Variable declarations are processed
+  rule  checkVarDecls(AS_Cmd[])
   rule  checkVarDecls(AS_Cmd[vardec(ID, _, _)::CMDS]):
         Get-SymTab(ID -> _)
-        $ID " is already declared\n"
-  rule  checkVarDecls(AS_Cmd[vardec(ID, T, _)::CMDS]):
+        sourcepos(ID -> POS)
+        error "double declaration", POS
+  rule  checkVarDecls(AS_Cmd[vardec(ID, T, EXP)::CMDS]):
         Get-NextTargetID(-> N)
+        {
+          T -> bool()
+          isBool(EXP)
+        |
+          T -> int()
+          isInt(EXP)
+        |
+          T -> string()
+          isString(EXP)
+        |
+          sourcepos(ID -> POS)
+          // "Error in line " $POS ": " $ID " is from type " pTypeFromExp(EXP) ". EXPECTED: " pType(T) "\n"
+          error "unexpected type", POS
+        }
         Set-SymTab(ID, m(T, N))
         Set-NextTargetID(N+1)
-        "  declare " $ID " as " pType(T) "[" $N "]\n"
+        // "  declare " $ID " as " pType(T) " [" $N "]\n"
+        checkVarDecls(CMDS)
   // Commands other than variable declarations are skipped
   rule  checkVarDecls(AS_Cmd[CMD::CMDS]):
         checkVarDecls(CMDS)
@@ -188,24 +205,36 @@ proc    checkVarApplsInCmds(SynTree:AS_Cmd[])
 
 // Check whether all variables applied in a single command have been declared
 proc    checkVarApplsInCmd(AS_Cmd)
-  // TODO
-  // rule  checkVarApplsInCmd(CMD):
-
+  rule  checkVarApplsInCmd(CMD)
+        {
+          CMD -> assign(_, EXP)  |
+          CMD -> vardec(_, _, EXP)  |
+          CMD -> write(EXP)   |
+          CMD -> writeln(EXP)
+        }
+        checkVarApplsInExp(EXP)
+  rule  checkVarApplsInCmd(_)
   // The following rule is for testing only. It will be called
   // if the definition of the predicate is still incomplete
-  rule  checkVarApplsInCmd(CMD):
+  rule  checkVarApplsInCmd(CMD)
         print "checkVarApplsInCmd has been called with CMD:"
         print CMD
 
-// Check whether all variables applied in
-// an expression have been declared:
+// Check whether all variables applied in an expression have been declared
 proc    checkVarApplsInExp(AS_Exp)
-  rule  checkVarApplsInExp(lit(_)):
-
-
+  rule  checkVarApplsInExp(varapp(ID))
+        {
+          Get-SymTab(ID -> m(T, N))
+          // "  declared var found: "   $ID " as " pType(T) " [" $N "]\n"
+        |
+          sourcepos(ID -> POS)
+          // "Error in line " $POS ": Undeclared var found: " $ID "\n"
+          error "undeclared variable", POS
+        }
+  rule  checkVarApplsInExp(_)
   // The following rule is for testing only. It will be called
   // if the definition of the predicate is still incomplete
-  rule  checkVarApplsInExp(EXP):
+  rule  checkVarApplsInExp(EXP)
         print "checkVarApplsInExp has been called with EXP:"
         print EXP
 
@@ -216,35 +245,37 @@ proc    checkVarApplsInExp(AS_Exp)
 // The predicates prelude and postlude together output a simple but
 // complete Jasmin program. Anything output between the prelude and
 // the postlude will be situated in the main method of that program.
-proc    outPrelude(NrOfVars: int)
-  rule  outPrelude(NrOfVars):
+proc    outPrelude(NrOfVars:int)
+  rule  outPrelude(NrOfVars)
         open "Target.j"
-        ";Target produced by compiler alg30                 \n"
-        ";at the Beuth Hochschule, TB5-CPB,WS12/13          \n"
-        ";---------------------------------                 \n"
-        ".class public Target                               \n"
-        ".super java/lang/Object                            \n"
-        ".method public <init>()V                           \n"
-        "   aload_0                                         \n"
-        "   invokenonvirtual java/lang/Object/<init>()V     \n"
-        "   return                                          \n"
-        ".end method                                        \n"
-        ".method public static main([Ljava/lang/String;)V   \n"
-        ".limit stack  10                                   \n"
-        ".limit locals " $NrOfVars                         "\n"
-        "   ldc \"-------------------------------\"         \n"
-        "   invokestatic RTS/plnString(Ljava/lang/String;)V \n"
-        "   ldc \"Here we go!\"                             \n"
-        "   invokestatic RTS/plnString(Ljava/lang/String;)V \n"
+        ";Target produced by compiler alg30"                    pNL
+        ";at the Beuth Hochschule, TB5-CPB,WS12/13"             pNL
+        ";---------------------------------"                    pNL
+        ".class public Target"                                  pNL
+        ".super java/lang/Object"                               pNL
+        ".method public <init>()V"                              pNL
+        pInd "aload_0"                                          pNL
+        pInd "invokenonvirtual java/lang/Object/<init>()V"      pNL
+        pInd "return"                                           pNL
+        ".end method"                                           pNL
+        ".method public static main([Ljava/lang/String;)V"      pNL
+        ".limit stack  10"                                      pNL
+        ".limit locals " $NrOfVars                              pNL
+        pInd "ldc \"-------------------------------\""          pNL
+        pInd "invokestatic RTS/plnString(Ljava/lang/String;)V"  pNL
+        pInd "ldc \"Here we go!\""                              pNL
+        pInd "invokestatic RTS/plnString(Ljava/lang/String;)V"  pNL
+                                                                pNL
 
 proc    outPostlude()
-  rule  outPostlude():
-        "   ldc \"That's all!\"                             \n"
-        "   invokestatic RTS/plnString(Ljava/lang/String;)V \n"
-        "   ldc \"-------------------------------\"         \n"
-        "   invokestatic RTS/plnString(Ljava/lang/String;)V \n"
-        "   return                                          \n"
-        ".end method                                        \n"
+  rule  outPostlude()
+                                                                pNL
+        pInd "ldc \"That's all!\""                              pNL
+        pInd "invokestatic RTS/plnString(Ljava/lang/String;)V"  pNL
+        pInd "ldc \"-------------------------------\""          pNL
+        pInd "invokestatic RTS/plnString(Ljava/lang/String;)V"  pNL
+        pInd "return"                                           pNL
+        ".end method"                                           pNL
         close // The file Target.j
 
 // The next target ID is at the same time the
@@ -258,44 +289,83 @@ proc    outAll(AS_Cmd[])
 
 // Translates CMDS into Jasmin and outputs the result
 proc    outCmds(CMDS:AS_Cmd[])
-  rule  outCmds(AS_Cmd[]):
+  rule  outCmds(AS_Cmd[])
   rule  outCmds(AS_Cmd[CMD::CMDS]):
         outCmd (CMD)
         outCmds(CMDS)
 
 // Output the translation of a single command
 proc    outCmd(AS_Cmd)
-  rule  outCmd(writeln(EXP)):
-        "   ;--- writeln\n"
-        outExp(EXP)
-        {
-          isString(EXP) "   invokestatic RTS/plnString(Ljava/lang/String;)V\n"
-        |
-          isInt(EXP)    "   invokestatic RTS/plnInt(Ljava/lang/Int;)V\n"
-        |
-          isBool(EXP)   "   invokestatic RTS/plnBool(Ljava/lang/Int;)V\n"
-        |
-          isVarapp(EXP) "   ; TODO isVarapp"
-        }
+  rule  outCmd(read(_)):
+        "; read" pNL
+        // TODO
   rule  outCmd(write(EXP)):
-        "   ;--- write\n"
+        "; write" pNL
         outExp(EXP)
+        pInd
         {
-          isString(EXP) "   invokestatic RTS/pString(Ljava/lang/String;)V\n"
-        |
-          isInt(EXP)    "   invokestatic RTS/pInt(Ljava/lang/Int;)V\n"
-        |
-          isBool(EXP)   "   invokestatic RTS/pBool(Ljava/lang/Int;)V\n"
+          isString(EXP) "invokestatic RTS/pString(Ljava/lang/String;)V" |
+          isInt(EXP)    "invokestatic RTS/pInt(I)V"                     |
+          isBool(EXP)   "invokestatic RTS/pBool(I)V"
         }
+        pNL
+  rule  outCmd(writeln(EXP)):
+        "; writeln" pNL
+        outExp(EXP)
+        pInd
+        {
+          isBool(EXP)   "invokestatic RTS/plnBool(I)V"                    |
+          isInt(EXP)    "invokestatic RTS/plnInt(I)V"                     |
+          isString(EXP) "invokestatic RTS/plnString(Ljava/lang/String;)V"
+        }
+        pNL
   rule  outCmd(vardec(_, _, EXP)):
-        "   ;--- vardec\n"
-        outExp(EXP)
+        "; vardec" pNL
+        Get-NextTargetID(-> NTI)
+        Get-Iterator(-> TI)
+        LessOrEqual(TI, NTI)
         {
-          isInt(EXP)    "   ;TODO int"
+          isBool(EXP)
+          outExp(EXP)
+          pInd { Less(TI, 4) "istore_" $TI | "istore " $TI }
+        |
+          isInt(EXP)
+          outExp(EXP)
+          pInd
+          { Less(TI, 4) "istore_" $TI | "istore " $TI }
+        |
+          isString(EXP)
+          pInd "new java/lang/String"                                       pNL
+          pInd "dup"                                                        pNL
+          outExp(EXP)
+          pInd "invokespecial java/lang/String/<init>(Ljava/lang/String;)V" pNL
+          pInd { Less(TI, 4) "astore_" $TI | "astore " $TI }
         }
+        pNL
+        Set-Iterator(TI+1)
+  rule  outCmd(assign(SI, EXP)):
+        "; assign" pNL
+        Get-SymTab(SI -> m(TYPE, TI))
+        {
+          isBool(EXP)
+          outExp(EXP)
+          pInd { Less(TI, 4) "istore_" $TI | "istore " $TI }
+        |
+          isInt(EXP)
+          outExp(EXP)
+          pInd { Less(TI, 4) "istore_" $TI | "istore " $TI }
+        |
+          isString(EXP)
+          pInd "new java/lang/String"                                       pNL
+          pInd "dup"                                                        pNL
+          outExp(EXP)
+          pInd "invokespecial java/lang/String/<init>(Ljava/lang/String;)V" pNL
+          pInd { Less(TI, 4) "astore_" $TI | "astore " $TI }
+        }
+        pNL
   // The following rule is for testing only. It will be called
   // if the definition of the predicate is still incomplete
-  rule  outCmd(CMD):
+  rule  outCmd(CMD)
         print "outCmd has been called with CMD:"
         print CMD
 
@@ -303,35 +373,60 @@ proc    outCmd(AS_Cmd)
 // Every expression EXP is translated into Jasmin instructions, which will
 // cause the value of EXP to be placed onto the stack of the JVM.
 proc    outExp(AS_Exp)
-  rule  outExp(lit(AVAL)):
+  rule  outExp(lit(VAL))
         {
-          AVAL -> stringVal(V3) "   ldc " "\"" $V3 "\"" "\n"
+          VAL -> stringVal(STR) pInd() "ldc " "\"" $STR "\""
         |
-          AVAL -> intVal(V4)    "   ldc " "\"" $V4 "\"" "\n"
+          VAL -> intVal(INT)
+          pInd
+          {
+            Less(INT, 128)   Greater(INT, -129)   "bipush" |
+            Less(INT, 32768) Greater(INT, -32769) "sipush" |
+                                                  "ldc"
+          }
+          " " $INT
         |
-          AVAL -> boolVal(V5)   "   ldc " "\"" $V5 "\"" "\n"
+          VAL -> boolVal(BOOL)  pInd "iconst_" $BOOL
         }
-  rule  outExp(varapp(ID)) : "; TODO identifier"
+        pNL
+  rule  outExp(varapp(SI))
+        Get-SymTab(SI -> m(TYPE, TI))
+        pInd
+        {
+          { TYPE -> bool() | TYPE -> int() }
+          { Less(TI, 4) "iload_" $TI | "iload " $TI }
+        |
+          TYPE -> string()  "aload_" $TI
+        }
+        pNL
   // The following rule is for testing only. It will be called
   // if the definition of the predicate is still incomplete
   rule  outExp(EXP):
         print "outExp was called with EXP:"
         print EXP
 
+// Prints an indent of a specific size
+proc    pInd()
+  rule  pInd() : "   "
+
+// Prints an newline escape sequence
+proc    pNL()
+  rule  pNL() : "\n"
+
 // The following condition predicates assume, that the abstract syntax
 // is fully type checked and o.k. Only under this assumption do they
 // discern expressions of different types.
-condition isString(AS_Exp)
-  rule    isString(lit(stringVal(_)))
+condition isBool(AS_Exp)
+  rule    isBool(lit(boolVal(_)))
+  rule    isBool(varapp(SI))   : Get-SymTab(SI -> m(T, _)) T -> bool()
 
 condition isInt(AS_Exp)
   rule    isInt(lit(intVal(_)))
+  rule    isInt(varapp(SI))    : Get-SymTab(SI -> m(T, _)) T -> int()
 
-condition isBool(AS_Exp)
-  rule    isBool(lit(boolVal(_)))
-
-condition isVarapp(AS_Exp)
-  rule    isVarapp(varapp(_))
+condition isString(AS_Exp)
+  rule    isString(lit(stringVal(_)))
+  rule    isString(varapp(SI)) : Get-SymTab(SI -> m(T, _)) T -> string()
 
 ////////////////////////////////////////////////////////////////////////////////
 // Auxiliary predicates, possibly useful for testing
@@ -347,35 +442,41 @@ proc    pCmd(AS_Cmd)
   rule  pCmd(CMD):
         {
           CMD -> read(SI)
-          "read(" $SI ");\n"
+          "read(" $SI ");"
         |
           CMD -> write(EXP)
-          "write("   pExp(EXP) ");\n"
+          "write("   pExp(EXP) ");"
         |
           CMD -> writeln(EXP)
-          "writeln(" pExp(EXP) ");\n"
+          "writeln(" pExp(EXP) ");"
         |
           CMD -> vardec(SI, T, EXP)
-          pType(T) $SI " := " pExp(EXP) ";\n"
+          pType(T) " " $SI " := " pExp(EXP) ";"
         |
           CMD -> assign(SI, EXP)
-          $SI " := " pExp(EXP) ";\n"
+          $SI " := " pExp(EXP) ";"
         }
+        pNL
   // The following rule is for testing only. It will be called
   // if the definition of the predicate is still incomplete
   rule  pCmd(CMD):
         print "pCMD was called with CMD:"
         print CMD
 
-
 proc    pType(AS_Type)
   rule  pType(TYPE):
         {
-          TYPE -> int()    "int    "
-        |
-          TYPE -> bool()   "bool   "
-        |
-          TYPE -> string() "string "
+          TYPE -> int()    "int"    |
+          TYPE -> bool()   "bool"   |
+          TYPE -> string() "string"
+        }
+
+proc    pTypeFromExp(AS_Exp)
+  rule  pTypeFromExp(EXP)
+        {
+          isBool(EXP)   pType(bool())   |
+          isInt(EXP)    pType(int())    |
+          isString(EXP) pType(string())
         }
 
 proc    pExp(AS_Exp)
@@ -397,11 +498,8 @@ proc    pExp(AS_Exp)
 proc    pVal(AS_Val)
   rule  pVal(VAL):
         {
-          VAL -> intVal   (P1) $P1
-        |
-          VAL -> boolVal  (0)  "false"
-        |
-          VAL -> boolVal  (1)  "true"
-        |
+          VAL -> intVal   (P1) $P1           |
+          VAL -> boolVal  (0)  "false"       |
+          VAL -> boolVal  (1)  "true"        |
           VAL -> stringVal(P2) "\"" $P2 "\""
         }

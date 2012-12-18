@@ -10,6 +10,9 @@ COLOR03="\033[31;01m"
 PREFIX="$COLOR02==>$COLOR01"
 SUFFIX="$COLORNO"
 
+JASMIN_DIR=~/Documents/_study/CB/projects/01_jasmin
+JASMIN_JAR=$JASMIN_DIR/jasmin.jar
+BCEL_JAR=$JASMIN_DIR/bcel.jar
 
 if [ "$1" == "" ]; then
   echo -e $COLOR03"USAGE: $SCRIPT <*.java|*.class|*.j> $SUFFIX"
@@ -24,24 +27,26 @@ NAME="${FILENAME%.*}"
 EXT="${1##*.}"
 
 if [ "$EXT" == "java" ]; then
-  echo 'JAVA2CLASS'
   javac $1
-  echo -e "Eine Datei $NAME.class wurde erzeugt (vom Java-Compiler javac)"
+  echo -e $COLOR02"JAVA2CLASS:"\
+    $COLORNO"Eine Datei "$COLOR03"$NAME.class"$COLORNO\
+    "wurde erzeugt (vom Java-Compiler javac)"
   exit
 fi
 
 if [ "$EXT" == "class" ]; then
-  echo 'CLASS2J'
-  BCEL_JAR=../../projects/01_jasmin/bcel.jar
   java -cp $BCEL_JAR JasminVisitor $1
-  echo -e "Eine Datei $NAME.j wurde erzeugt (vom back-assembler JasminVisitor)"
+  echo -e $COLOR02"CLASS2J:"\
+    $COLORNO"Eine Datei"\
+    $COLOR03"$NAME.j"$COLORNO\
+    "wurde erzeugt (Back-Assembler JasminVisitor)"
   exit
 fi
 
 if [ "$EXT" == "j" ]; then
-  echo 'J2CLASS'
-  echo -e $1 wird nach $NAME.class uebersetzt.
-  JASMIN_JAR=../../projects/01_jasmin/jasmin.jar
   java -cp $JASMIN_JAR jasmin.Main $NAME.j
+  echo -e $COLOR02"J2CLASS:"\
+    $COLORNO"Eine Datei "$COLOR03"$NAME.class"$COLORNO\
+    "wurde erzeugt (Jasmin)."
   exit
 fi
