@@ -1,4 +1,84 @@
-write("17 > 15? ");
-writeln(17 > 15);
-write("17 = 15? ");
-writeln(17 = 15);
+writeln(" EXPRESSION              | EXPECTED                | RESULT");
+writeln("-------------------------|-------------------------|-------------------------");
+
+// concat
+write  (" \"Hello \" & \"World\"      | Hello World             | ");
+writeln("Hello " & "World");
+
+write  (" 123 & 456               | 123456                  | ");
+writeln(123 & 456);
+
+write  (" true & false            | truefalse               | ");
+writeln(true & false);
+
+// less than
+write  (" 1 < 2                   | true                    | ");
+writeln(1 < 2);
+
+write  (" 3 < 2                   | false                   | ");
+writeln(3 < 2);
+
+write  (" \"asd\" < \"asdf\"          | true                    | ");
+writeln("asd" < "asdf");
+
+write  (" false < true            | true                    | ");
+writeln(false < true);
+
+// less equal
+write  (" 3 <= 4                  | true                    | ");
+writeln(3 <= 4);
+
+// equal
+write  (" 5 = 5                   | true                    | ");
+writeln(5 = 5);
+
+write  (" \"test\" = \"test\"         | true                    | ");
+writeln("test" = "test");
+
+write  (" \"test\" = \"tesf\"         | false                   | ");
+writeln("test" = "tesf");
+
+// not equal
+write  (" \"test\" != \"test\"        | false                   | ");
+writeln("test" != "test");
+
+// greater equal
+write  (" 5 >= 6                  | false                   | ");
+writeln(5 >= 6);
+
+// greater
+write  (" 7 > 6                   | true                    | ");
+writeln(7 > 6);
+
+// or
+write  (" true or false           | true                    | ");
+writeln(true or false);
+
+// and
+write  (" true and false          | false                   | ");
+writeln(true and false);
+
+// not
+write  (" not true                | false                   | ");
+writeln(not true);
+
+// add
+write  (" 1 + 2 + 3               | 6                       | ");
+writeln(1 + 2 + 3);
+
+// sub
+write  (" 10 - 3 - 2              | 5                       | ");
+writeln(10 - 3 - 2);
+
+// mul
+write  (" 3 * 3                   | 9                       | ");
+writeln(3 * 3);
+
+// div
+write  (" 9 / 3                   | 3                       | ");
+writeln(9 / 3);
+
+// minus
+write  (" -1                      | -1                      | ");
+writeln(-1);
+

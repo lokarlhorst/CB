@@ -1,0 +1,8 @@
+write("       expected:found\n");
+write("02-07   false  : "); writeln(not true);
+write("02-08   true   : "); writeln(not false);
+write("02-09   -123   : "); writeln(-123);
+write("02-10   123    : "); writeln(-(-123));
+write("02-33   true   : "); writeln(true and not false or true);
+write("02-34   25     : "); writeln(10 + -20 * -30 / 40);
+write("02-35   true   : "); writeln(not(not(not false)));
