@@ -1,1 +1,6 @@
-writeln("This program does not yet contain errors!");
+//int anna := "ABC";
+//bool bert := "true"
+//string carl := 123;
+int dora; dora := "ABC";
+//write(10 + "ABC");
+//write(true < 123);
