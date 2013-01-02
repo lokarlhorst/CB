@@ -281,7 +281,7 @@ proc    outPostlude()
 // The next target ID is at the same time the
 // number of variables declared in the alg source program:
 proc    outAll(AS_Cmd[])
-  rule  outAll(SynTree):
+  rule  outAll(SynTree)
         Get-NextTargetID(-> NrOfVars)
         outPrelude(NrOfVars)
         outCmds(SynTree)
@@ -290,7 +290,7 @@ proc    outAll(AS_Cmd[])
 // Translates CMDS into Jasmin and outputs the result
 proc    outCmds(CMDS:AS_Cmd[])
   rule  outCmds(AS_Cmd[])
-  rule  outCmds(AS_Cmd[CMD::CMDS]):
+  rule  outCmds(AS_Cmd[CMD::CMDS])
         outCmd (CMD)
         outCmds(CMDS)
 
