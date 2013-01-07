@@ -3,8 +3,8 @@
 // Variables may be used before they are declared.
 
 root
-  root1() // "with    bells and whistles" for development
-  // root2() // "without bells and whistles" for test and production
+  // root1() // "with    bells and whistles" for development
+  root2() // "without bells and whistles" for test and production
 
 proc    root1()
   rule  root1()
@@ -16,7 +16,6 @@ proc    root1()
         "-------------------------------\n"
         "Additional error messages:\n"
         check10(SynTree)
-        checkCmds(SynTree)
         "No additonal error messages\n"
         "-------------------------------\n"
         "SynTree:\n" pCmds(SynTree)
@@ -225,38 +224,27 @@ proc    check10(SynTree: AS_Cmd[])
   rule  check10(CMDS)
         checkVarDecls(CMDS)       // Is no variable declared more than once?
         checkVarApplsInCmds(CMDS) // Is every applied variable declared?
+        checkCmds(CMDS)
 
 // From a syntax tree construct a symbol table and
 // check for double declarations:
 proc    checkVarDecls(SynTree:AS_Cmd[])
   // Variable declarations are processed
   rule  checkVarDecls(AS_Cmd[])
-  rule  checkVarDecls(AS_Cmd[vardec(ID, _, _)::CMDS])
-        Get-SymTab(ID -> _)
-        sourcepos(ID -> POS)
-        error "double declaration", POS
-  // rule  checkVarDecls(AS_Cmd[vardec(ID, T, EXP)::CMDS])
-  //       Get-NextTargetID(-> N)
-  //       {
-  //         T -> bool()
-  //         isBool(EXP)
-  //       |
-  //         T -> int()
-  //         isInt(EXP)
-  //       |
-  //         T -> string()
-  //         isString(EXP)
-  //       |
-  //         sourcepos(ID -> POS)
-  //         // "Error in line " $POS ": " $ID " is from type " pTypeFromExp(EXP) ". EXPECTED: " pType(T) "\n"
-  //         error "unexpected type", POS
-  //       }
-  //       Set-SymTab(ID, m(T, N))
-  //       Set-NextTargetID(N+1)
-  //       // "  declare " $ID " as " pType(T) " [" $N "]\n"
-  //       checkVarDecls(CMDS)
+  rule  checkVarDecls(AS_Cmd[vardec(SI, _, _)::CMDS])
+        Get-SymTab(SI -> _)
+        sourcepos(SI -> POS)
+        error "Double declaration", POS
+  rule  checkVarDecls(AS_Cmd[vardec(SI, TYPE, EXP)::CMDS])
+        Get-NextTargetID(-> N)
+        Set-SymTab(SI, m(TYPE, N))
+        Set-NextTargetID(N+1)
+        // pInd
+        // "declare " $SI " as " pType(TYPE) " with " pExp(EXP) " [" $N "]"
+        // pNL
+        checkVarDecls(CMDS)
   // Commands other than variable declarations are skipped
-  rule  checkVarDecls(AS_Cmd[CMD::CMDS]):
+  rule  checkVarDecls(AS_Cmd[CMD::CMDS])
         checkVarDecls(CMDS)
   rule  checkVarDecls(AS_Cmd[])
 
@@ -271,13 +259,15 @@ proc    checkVarApplsInCmds(SynTree:AS_Cmd[])
 proc    checkVarApplsInCmd(AS_Cmd)
   rule  checkVarApplsInCmd(CMD)
         {
-          CMD -> assign(_, EXP)  |
+          CMD -> assign(_, EXP)     |
           CMD -> vardec(_, _, EXP)  |
-          CMD -> write(EXP)   |
+          CMD -> write(EXP)         |
           CMD -> writeln(EXP)
+        |
+          CMD -> read(SI)
+          EXP <- varapp(SI)
         }
         checkVarApplsInExp(EXP)
-  rule  checkVarApplsInCmd(_)
   // The following rule is for testing only. It will be called
   // if the definition of the predicate is still incomplete
   rule  checkVarApplsInCmd(CMD)
@@ -286,15 +276,20 @@ proc    checkVarApplsInCmd(AS_Cmd)
 
 // Check whether all variables applied in an expression have been declared
 proc    checkVarApplsInExp(AS_Exp)
-  rule  checkVarApplsInExp(varapp(ID))
+  rule  checkVarApplsInExp(varapp(SI))
         {
-          Get-SymTab(ID -> m(T, N))
+          Get-SymTab(SI -> m(T, N))
           // "  declared var found: "   $ID " as " pType(T) " [" $N "]\n"
         |
-          sourcepos(ID -> POS)
+          sourcepos(SI -> POS)
           // "Error in line " $POS ": Undeclared var found: " $ID "\n"
           error "Undeclared variable", POS
         }
+  rule  checkVarApplsInExp(exp1(_, EXP))
+        checkVarApplsInExp(EXP)
+  rule  checkVarApplsInExp(exp2(_, E1, E2))
+        checkVarApplsInExp(E1)
+        checkVarApplsInExp(E2)
   rule  checkVarApplsInExp(_)
   // The following rule is for testing only. It will be called
   // if the definition of the predicate is still incomplete
@@ -305,39 +300,125 @@ proc    checkVarApplsInExp(AS_Exp)
 // Type checking of all commands
 proc    checkCmds(AS_Cmd[])
   rule  checkCmds(AS_Cmd[CMD::CMDS])
-        checkCmds(CMDS)
         checkCmd (CMD)
+        checkCmds(CMDS)
   rule  checkCmds(AS_Cmd[])
 
 // Type checking of one command
 proc    checkCmd(AS_Cmd)
-  rule  checkCmd(vardec(ID, T, EXP))
-        Get-NextTargetID(-> N)
+  rule  checkCmd(vardec(SI, TYPE, EXP))
         {
-          T -> bool()
+          TYPE -> bool()
           isBool(EXP)
         |
-          T -> int()
+          TYPE -> int()
           isInt(EXP)
         |
-          T -> string()
+          TYPE -> string()
           isString(EXP)
         |
-          sourcepos(ID -> POS)
-          // "Error in line " $POS ": " $ID " is from type " pTypeFromExp(EXP) ". EXPECTED: " pType(T) "\n"
-          error "unexpected type", POS
+          sourcepos(SI -> POS)
+          error "Type error in variable declaration", POS
         }
-        Set-SymTab(ID, m(T, N))
-        Set-NextTargetID(N+1)
-        // "  declare " $ID " as " pType(T) " [" $N "]\n"
+  rule  checkCmd(assign(SI, EXP))
+        Get-SymTab(SI -> m(TYPE, _))
+        {
+          TYPE -> bool()
+          isBool(EXP)
+        |
+          TYPE -> int()
+          isInt(EXP)
+        |
+          TYPE -> string()
+          isString(EXP)
+        |
+          sourcepos(SI -> POS)
+          error "Type error in assignment", POS
+        }
+  rule  checkCmd(read(_))
+  rule  checkCmd(write(EXP))
+        checkExp(EXP -> _)
+  rule  checkCmd(writeln(EXP))
+        checkExp(EXP -> _)
   rule  checkCmd(CMD)
         print "checkCmd has been called with CMD:"
         print CMD
 
 // Type checking of an expression
 proc    checkExp(AS_Exp -> AS_Type)
-  rule  checkExp(_ -> int())
-        "checkExp"
+  rule  checkExp(exp1(OP, EXP) -> int())
+        {
+          checkExp(EXP -> TYPE)
+          OP -> minus()
+          TYPE -> int()
+        |
+          checkExp(EXP -> TYPE)
+          OP -> not()
+          TYPE -> bool()
+        |
+          sourcepos(OP -> POS)
+          error "Operand of unary operator has wrong type", POS
+        }
+  rule  checkExp(exp2(OP, E1, E2) -> int())
+        {
+          { OP -> and() | OP -> or() }
+          checkExp(E1 -> T1)
+          checkExp(E2 -> T2)
+          {
+            T1 -> bool()
+            T2 -> bool()
+          |
+            sourcepos(OP -> POS)
+            error "Operand of binary bool operator is not bool", POS
+          }
+        |
+          { OP -> add() | OP -> sub() | OP -> div() | OP -> mul() }
+          checkExp(E1 -> T1)
+          checkExp(E2 -> T2)
+          {
+            T1 -> int()
+            T2 -> int()
+          |
+            sourcepos(OP -> POS)
+            error "Operand of binary arithmetic operator is not int", POS
+          }
+        |
+          {
+            OP -> eq() | OP -> ne() |
+            OP -> gt() | OP -> ge() |
+            OP -> lt() | OP -> le()
+          }
+          checkExp(E1 -> T1)
+          checkExp(E2 -> T2)
+          {
+            T1 -> bool()
+            T2 -> bool()
+          |
+            T1 -> int()
+            T2 -> int()
+          |
+            T1 -> string()
+            T2 -> string()
+          |
+            sourcepos(OP -> POS)
+            error "Operands of a comparison are of different types", POS
+          }
+        |
+          "exp2" pNL
+        }
+  rule  checkExp(lit(VAL) -> TYPE)
+        {
+          VAL -> stringVal(_)
+          TYPE <- string()
+        |
+          VAL -> intVal(_)
+          TYPE <- int()
+        |
+          VAL -> boolVal(_)
+          TYPE <- bool()
+        }
+  rule  checkExp(varapp(SI) -> TYPE)
+        Get-SymTab(SI -> m(TYPE, _))
 
 ////////////////////////////////////////////////////////////////////////////////
 // Predicates to translate abstract syntax into Java assembler (Jasmin)

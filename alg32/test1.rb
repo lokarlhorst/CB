@@ -1,18 +1,13 @@
-@echo off
-rem Script TST1.CMD
-rem ----------------------------------------------------------------------
-rem Checks if the current alg compiler translates the
-rem alg31 source file TST1.ALG such that it produces the expected output.
-rem Translates TST1.ALG into a class, executes that class, redirects the
-rem output of that execution into a file FOUND1.OUT, compares that file
-rem with a file EXPECTED1.OUT and reports any differences.
-rem ----------------------------------------------------------------------
 
-SetLocal
+# Checks if the current alg compiler translates the
+# alg31 source file TST1.ALG such that it produces the expected output.
+# Translates TST1.ALG into a class, executes that class, redirects the
+# output of that execution into a file FOUND1.OUT, compares that file
+# with a file EXPECTED1.OUT and reports any differences.
 
-rem If a file named FOUND1.OUT exists it is deleted. Then
-rem a new file named FOUND1.OUT is created with the text
-rem "Testfile1" as its first line:
+# If a file named FOUND1.OUT exists it is deleted. Then
+# a new file named FOUND1.OUT is created with the text
+# "Testfile1" as its first line:
 
 echo Testfile1> FOUND1.OUT
 

@@ -1,6 +1,20 @@
 //int anna := "ABC";
-//bool bert := "true"
+//bool bert := "true";
 //string carl := 123;
-int dora; dora := "ABC";
+
+//int dora; dora := "ABC";
+
+//int x := 3; writeln(x + y);
+
+//writeln(-"asd");
+//writeln(-true);
+//writeln(not 123);
+//writeln(not "asd");
+
+//writeln(true and 1);
+
 //write(10 + "ABC");
 //write(true < 123);
+
+int x;
+read(x);
