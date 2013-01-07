@@ -6,7 +6,7 @@ if 3 < 2 then
   writeln("NOK-01");
 end if;
 
-if 5 > 3 then
+if 5 - 3 then
   writeln(" OK-02");
 else
   writeln("NOK-02");
