@@ -26,4 +26,6 @@ unless FileUtils.cmp("#{EXPECTED}", "#{FOUND}")
   puts 'Differences found!'
   puts Diffy::Diff.new("#{EXPECTED}", "#{FOUND}",
                        :source => 'files', :diff => "-w")
+else
+  puts 'No differences found!'
 end

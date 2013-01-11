@@ -9,7 +9,7 @@ GRAMFILE = File.basename(Dir.pwd) + '.g'
 EXPECTED = "#{TESTNAME}/expected"
 FOUND    = "#{TESTNAME}/found"
 
-FileUtils.rm("#{FOUND}")
+if File.exist? "#{FOUND}" then FileUtils.rm("#{FOUND}") end
 
 system "#{GECCO} /gen #{GRAMFILE}"
 
@@ -278,4 +278,6 @@ unless FileUtils.cmp("#{EXPECTED}", "#{FOUND}")
   puts 'Differences found!'
   puts Diffy::Diff.new("#{EXPECTED}", "#{FOUND}",
                        :source => 'files', :diff => "-w")
+else
+  puts 'No differences found!'
 end

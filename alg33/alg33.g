@@ -620,13 +620,12 @@ proc    outCmd(AS_Cmd)
         nl
         Get-WhileIterator(-> I)
         Set-WhileIterator(I+1)
+        "goto WhileCondition_" $I nl
         "WhileStart_" $I ":" nl
-        "; condition" nl
-        outExp(EXP)
-        ind "ifeq WhileEnd_" $I nl
         outCmds(ACMDS)
-        ind "goto WhileStart_" $I nl
-        "WhileEnd_" $I ":" nl
+        "WhileCondition_" $I ":" nl
+        outExp(EXP)
+        ind "ifne WhileStart_" $I nl
         nl
   rule  outCmd(do_until(EXP, ACMDS))
         nl
